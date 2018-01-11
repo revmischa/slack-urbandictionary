@@ -1,6 +1,7 @@
 import json
 import datetime
 import requests
+import random
 from urllib.parse import parse_qs
 
 
@@ -36,7 +37,7 @@ def handler(event, context):
             'response_type': 'ephemeral',
             'text': f'Unknown word: {text}'
         })
-    definition = definitions[0]
+    definition = random.choice(definitions)
 
     return respond(res={
         'response_type': 'in_channel',
