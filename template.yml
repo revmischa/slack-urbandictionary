@@ -9,7 +9,7 @@ Parameters:
     Description: CodeStar projectId used to associate new resources to team members
 
 Resources:
-  HelloWorld:
+  Urban:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
