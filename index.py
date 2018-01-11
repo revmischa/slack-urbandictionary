@@ -16,9 +16,8 @@ def respond(err=None, res=None):
 
 def handler(event, context):
     params = parse_qs(event['body'])
-    user = params['user_name'][0]
-    command = params['command'][0]
-    channel = params['channel_name'][0]
+    # command = params['command'][0]
+    # channel = params['channel_name'][0]
     text = params['text'][0]
 
     res = requests.get('http://api.urbandictionary.com/v0/define', params={'term': text})
