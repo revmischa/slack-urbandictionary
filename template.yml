@@ -26,5 +26,10 @@ Resources:
         PostEvent:
           Type: Api
           Properties:
+            Path: /oauth
+            Method: post
+        PostEvent:
+          Type: Api
+          Properties:
             Path: /
             Method: post
