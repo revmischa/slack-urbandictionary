@@ -18,11 +18,16 @@ Resources:
         Fn::ImportValue:
           !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
       Events:
-        OAuthEvent:
+        OAuthEventPost:
           Type: Api
           Properties:
             Path: /oauth
             Method: post
+        OAuthEventGet:
+          Type: Api
+          Properties:
+            Path: /oauth
+            Method: get
         SlashCommandEvent:
           Type: Api
           Properties:
