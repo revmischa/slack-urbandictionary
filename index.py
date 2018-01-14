@@ -14,8 +14,7 @@ def respond(err=None, res=None):
         },
     }
 
-
-def handler(event, context):
+def slack_slash(event):
     params = parse_qs(event['body'])
     # command = params['command'][0]
     # channel = params['channel_name'][0]
@@ -57,6 +56,22 @@ def handler(event, context):
         ]
     })
 
+def oauth(event):
+    return {
+        'statusCode': 200,
+        'body': "Installed!",
+        'headers': {
+            'Location': 'https://github.com/revmischa/slack-urbandictionary#usage',
+        },
+    }
+
+def handler(event, context):
+    if event['path'] == '/oauth':
+        return oauth(event)
+    elif event['path'] == '/':
+        return slack_slash(event)
+    else:
+        return respond(err=f"unknown path {event['path']}")
 
 if __name__ == 'main':
     handler({})
