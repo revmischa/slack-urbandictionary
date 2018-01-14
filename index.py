@@ -58,7 +58,7 @@ def slack_slash(event):
 
 def oauth(event):
     return {
-        'statusCode': 200,
+        'statusCode': 301,
         'body': "Installed!",
         'headers': {
             'Location': 'https://github.com/revmischa/slack-urbandictionary#usage',
