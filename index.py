@@ -36,7 +36,9 @@ def slack_slash(event):
             'response_type': 'ephemeral',
             'text': f'Unknown word: {text}'
         })
-    definition = random.choice(definitions)
+
+    # definition = random.choice(definitions)
+    definition = definitions[0]
 
     return respond(res={
         'response_type': 'in_channel',
