@@ -115,7 +115,7 @@ def oauth(event):
     }
 
 def handler(event, context):
-    pprint(event)
+    # pprint(event)
     path = event['resource']
     print(f"path: {path}")
     if path == '/oauth':
