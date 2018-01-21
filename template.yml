@@ -39,7 +39,7 @@ Resources:
     Properties:
       PolicyName: lambda-AllowSSM-BasicUsage
       Roles:
-        - Fn::ImportValue: !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+        - !Ref 'LambdaTrustRole'
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
