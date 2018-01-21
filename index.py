@@ -105,7 +105,6 @@ def oauth(event):
     }).json()
 
     print(res)
-    return "Success!"
 
     return {
         'statusCode': 302,
