@@ -3,7 +3,7 @@ import datetime
 import requests
 import random
 import boto3
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, urlencode
 from pprint import pprint
 
 # AWS SSM encrypted parameter store
@@ -20,6 +20,8 @@ def get_ssm_param(param_name: str) -> str:
 
 SLACK_OAUTH_CLIENT_ID = get_ssm_param('ud_slack_oauth_client_id')
 SLACK_OAUTH_CLIENT_SECRET = get_ssm_param('ud_slack_oauth_client_secret')
+OAUTH_REDIRECT_URL = 'https://singapi.mischa.lol/udv1/Prod/oauth'
+OAUTH_REDIRECT_URL = 'http://localhost:3000/oauth'
 
 
 def respond(err=None, res=None):
@@ -80,7 +82,12 @@ def oauth_begin(event):
         'statusCode': 302,
         'body': "Redirecting...",
         'headers': {
-            'Location': 'https://slack.com/oauth/authorize?client_id=2716024371.296705110721&scope=commands',
+            'Content-type': 'text/plain',
+            'Location': 'https://slack.com/oauth/authorize?' + urlencode({
+                'client_id': SLACK_OAUTH_CLIENT_ID,
+                'scope': 'commands',
+                'redirect_uri': OAUTH_REDIRECT_URL,
+            }),
         },
     }
 
@@ -94,7 +101,7 @@ def oauth(event):
         'code': code,
         'client_id': SLACK_OAUTH_CLIENT_ID,
         'client_secret': SLACK_OAUTH_CLIENT_SECRET,
-        'redirect_uri': 'https://singapi.mischa.lol/udv1/oauth',
+        'redirect_uri': OAUTH_REDIRECT_URL,
     }).json()
 
     print(res)
@@ -110,7 +117,8 @@ def oauth(event):
 
 def handler(event, context):
     pprint(event)
-    path = event['resourcePath']
+    path = event['resource']
+    print(f"path: {path}")
     if path == '/oauth':
         return oauth(event)
     elif path == '/install':

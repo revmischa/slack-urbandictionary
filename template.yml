@@ -25,6 +25,11 @@ Resources:
           Properties:
             Path: /oauth
             Method: post
+        OAuthInstall:
+          Type: Api
+          Properties:
+            Path: /install
+            Method: get
         OAuthEventGet:
           Type: Api
           Properties:
