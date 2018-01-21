@@ -33,3 +33,22 @@ Resources:
           Properties:
             Path: /
             Method: post
+
+  iamLambdaPolicy:
+    Type: "AWS::IAM::Policy"
+    Properties:
+      PolicyName: lambda-AllowSSM-BasicUsage
+      Roles:
+        - !Ref 'LambdaTrustRole'
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: "Stmt1507232964000"
+            Effect: "Allow"
+            Action:
+              - "ssm:GetParameter"
+              - "ssm:GetParameters"
+              - "ssm:PutParameter"
+              - "ssm:DeleteParameter"
+            Resource:
+              - "*"
