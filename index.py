@@ -109,6 +109,7 @@ def oauth(event):
     }
 
 def handler(event, context):
+    pprint(event)
     if event['path'] == '/oauth':
         return oauth(event)
     elif event['path'] == '/install':
