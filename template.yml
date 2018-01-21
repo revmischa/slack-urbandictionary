@@ -11,8 +11,8 @@ Parameters:
 Resources:
   Urban:
     Type: AWS::Serverless::Function
-    DependsOn:
-      !Ref 'iamLambdaPolicy'
+    # DependsOn:
+    #   'iamLambdaPolicy'
     Properties:
       Handler: index.handler
       Runtime: python3.6
@@ -41,19 +41,19 @@ Resources:
             Path: /
             Method: post
 
-  iamLambdaPolicy:
-    Type: "AWS::IAM::Policy"
-    Properties:
-      PolicyName: lambda-AllowSSM-BasicUsage
-      Roles:
-        - !Ref 'LambdaTrustRole'
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: "Stmt1507232964000"
-            Effect: "Allow"
-            Action:
-              - "ssm:GetParameter"
-              - "ssm:GetParameters"
-            Resource:
-              - "arn:aws:ssm:ap-southeast-1:178183757879:parameter/ud_*"
+  # iamLambdaPolicy:
+  #   Type: "AWS::IAM::Policy"
+  #   Properties:
+  #     PolicyName: lambda-AllowSSM-BasicUsage
+  #     Roles:
+  #       - !Ref 'LambdaTrustRole'
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Sid: "Stmt1507232964000"
+  #           Effect: "Allow"
+  #           Action:
+  #             - "ssm:GetParameter"
+  #             - "ssm:GetParameters"
+  #           Resource:
+  #             - "arn:aws:ssm:ap-southeast-1:178183757879:parameter/ud_*"
