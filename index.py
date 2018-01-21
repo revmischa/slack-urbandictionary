@@ -21,7 +21,7 @@ def get_ssm_param(param_name: str) -> str:
 SLACK_OAUTH_CLIENT_ID = get_ssm_param('ud_slack_oauth_client_id')
 SLACK_OAUTH_CLIENT_SECRET = get_ssm_param('ud_slack_oauth_client_secret')
 OAUTH_REDIRECT_URL = 'https://singapi.mischa.lol/udv1/Prod/oauth'
-OAUTH_REDIRECT_URL = 'http://localhost:3000/oauth'
+# OAUTH_REDIRECT_URL = 'http://localhost:3000/oauth'
 
 
 def respond(err=None, res=None):
