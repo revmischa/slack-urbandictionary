@@ -11,6 +11,8 @@ Parameters:
 Resources:
   Urban:
     Type: AWS::Serverless::Function
+    DependsOn:
+      !Ref 'iamLambdaPolicy'
     Properties:
       Handler: index.handler
       Runtime: python3.6
@@ -48,7 +50,5 @@ Resources:
             Action:
               - "ssm:GetParameter"
               - "ssm:GetParameters"
-              - "ssm:PutParameter"
-              - "ssm:DeleteParameter"
             Resource:
-              - "*"
+              - "arn:aws:ssm:ap-southeast-1:178183757879:parameter/ud_*"

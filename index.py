@@ -110,14 +110,15 @@ def oauth(event):
 
 def handler(event, context):
     pprint(event)
-    if event['path'] == '/oauth':
+    path = event['resourcePath']
+    if path == '/oauth':
         return oauth(event)
-    elif event['path'] == '/install':
+    elif path == '/install':
         return oauth_begin(event)
-    elif event['path'] == '/':
+    elif path == '/':
         return slack_slash(event)
     else:
-        return respond(err=f"unknown path {event['path']}")
+        return respond(err=f"unknown path {path}")
 
 if __name__ == 'main':
     handler({})
