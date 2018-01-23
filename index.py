@@ -41,7 +41,7 @@ def slack_slash(event):
     text = params['text'][0]
 
     # token validation
-    if not token in params:
+    if not 'token' in params:
         return respond(err="token missing")
     token = params['token'][0]
     if token is not SLACK_VERIFICATION_TOKEN:
