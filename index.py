@@ -40,6 +40,13 @@ def slack_slash(event):
     # channel = params['channel_name'][0]
     text = params['text'][0]
 
+    # token validation
+    if not token in params:
+        return respond(err="token missing")
+    token = params['token'][0]
+    if token is not SLACK_VERIFICATION_TOKEN:
+        return respond(err="invalid token")
+
     res = requests.get('http://api.urbandictionary.com/v0/define', params={'term': text})
 
     if res.status_code != 200:
