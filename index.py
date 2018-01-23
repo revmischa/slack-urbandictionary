@@ -44,7 +44,7 @@ def slack_slash(event):
     if not 'token' in params:
         return respond(err="token missing")
     token = params['token'][0]
-    if token is not SLACK_VERIFICATION_TOKEN:
+    if token != SLACK_VERIFICATION_TOKEN:
         return respond(err="invalid token")
 
     res = requests.get('http://api.urbandictionary.com/v0/define', params={'term': text})
