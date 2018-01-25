@@ -39,6 +39,7 @@ def slack_slash(event):
     # command = params['command'][0]
     # channel = params['channel_name'][0]
     text = params['text'][0]
+    print(f"text={text}")
 
     # token validation
     if not 'token' in params:
@@ -125,7 +126,6 @@ def oauth(event):
 def handler(event, context):
     # pprint(event)
     path = event['resource']
-    print(f"path: {path}")
     if path == '/oauth':
         return oauth(event)
     elif path == '/install':
