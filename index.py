@@ -5,6 +5,7 @@ import random
 import boto3
 from urllib.parse import parse_qs, urlencode
 from pprint import pprint
+from concurrent.futures.thread import ThreadPoolExecutor
 
 # AWS SSM encrypted parameter store
 ssm = boto3.client("ssm", region_name="ap-southeast-1")
@@ -28,6 +29,8 @@ SLACK_VERIFICATION_TOKEN = get_ssm_param("ud_slack_verification_token")
 SLACK_LOG_WH = get_ssm_param("ud_slack_wh_url")
 OAUTH_REDIRECT_URL = "https://singapi.mischa.lol/udv1/Prod/oauth"
 # OAUTH_REDIRECT_URL = 'http://localhost:3000/oauth'
+
+executor = ThreadPoolExecutor(max_workers=5)
 
 
 def respond(err=None, res=None):
@@ -86,8 +89,12 @@ def slack_slash(event):
         ],
     }
 
-    requests.post(
-        SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(msg)
+    executor.submit(
+        lambda: requests.post(
+            SLACK_LOG_WH,
+            headers={"Content-Type": "application/json"},
+            data=json.dumps(msg),
+        )
     )
 
     return respond(res={"response_type": "in_channel", **msg,})
