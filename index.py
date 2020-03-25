@@ -6,6 +6,7 @@ import boto3
 from urllib.parse import parse_qs, urlencode
 from pprint import pprint
 from concurrent.futures.thread import ThreadPoolExecutor
+from copy import deepcopy
 
 # AWS SSM encrypted parameter store
 ssm = boto3.client("ssm", region_name="ap-southeast-1")
@@ -44,6 +45,10 @@ def slack_slash(event):
     # command = params['command'][0]
     # channel = params['channel_name'][0]
     text = params["text"][0]
+    username = params.get("user_name", ["Unknown"])[0]
+    import pprint
+
+    pprint.pprint(params)
     print(f"text={text}")
 
     # token validation
@@ -87,8 +92,10 @@ def slack_slash(event):
         ],
     }
 
+    log = deepcopy(msg)
+    log["attachments"].append({"title": "User", text: username})
     requests.post(
-        SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(msg)
+        SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(log)
     )
 
     return respond(res={"response_type": "in_channel", **msg,})
