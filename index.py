@@ -96,8 +96,8 @@ def slack_slash(event):
     }
 
     log = deepcopy(msg)
-    log["attachments"].append(
-        {"title": "User", "text": username}, {"title": "Domain", "text": team}
+    log["attachments"].extend(
+        [{"title": "User", "text": username}, {"title": "Domain", "text": team}]
     )
     requests.post(
         SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(log)
