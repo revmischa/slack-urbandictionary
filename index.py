@@ -30,8 +30,6 @@ SLACK_LOG_WH = get_ssm_param("ud_slack_wh_url")
 OAUTH_REDIRECT_URL = "https://singapi.mischa.lol/udv1/Prod/oauth"
 # OAUTH_REDIRECT_URL = 'http://localhost:3000/oauth'
 
-executor = ThreadPoolExecutor(max_workers=5)
-
 
 def respond(err=None, res=None):
     return {
@@ -89,14 +87,9 @@ def slack_slash(event):
         ],
     }
 
-    executor.submit(
-        lambda: requests.post(
-            SLACK_LOG_WH,
-            headers={"Content-Type": "application/json"},
-            data=json.dumps(msg),
-        )
+    requests.post(
+        SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(msg)
     )
-    executor.shutdown(wait=True)
 
     return respond(res={"response_type": "in_channel", **msg,})
 
