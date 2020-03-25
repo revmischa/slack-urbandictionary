@@ -46,10 +46,13 @@ def slack_slash(event):
     # channel = params['channel_name'][0]
     text = params["text"][0]
     username = params.get("user_name", ["Unknown"])[0]
-    import pprint
+    userid = params.get("user_id", ["Unknown"])[0]
+    team = params.get("team_domain", ["Unknown"])[0]
+    print(f"text={text}, teaem={team}, user={username}")
 
-    pprint.pprint(params)
-    print(f"text={text}")
+    if userid in ["UJM8TNCUQ"]:
+        print("banned")
+        return
 
     # token validation
     if False:
@@ -93,7 +96,9 @@ def slack_slash(event):
     }
 
     log = deepcopy(msg)
-    log["attachments"].append({"title": "User", text: username})
+    log["attachments"].append(
+        {"title": "User", "text": username}, {"title": "Domain", "text": team}
+    )
     requests.post(
         SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(log)
     )
