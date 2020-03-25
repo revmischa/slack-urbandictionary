@@ -96,6 +96,7 @@ def slack_slash(event):
             data=json.dumps(msg),
         )
     )
+    executor.shutdown(wait=True)
 
     return respond(res={"response_type": "in_channel", **msg,})
 
