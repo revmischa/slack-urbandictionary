@@ -48,11 +48,11 @@ def slack_slash(event):
     username = params.get("user_name", ["Unknown"])[0]
     userid = params.get("user_id", ["Unknown"])[0]
     team = params.get("team_domain", ["Unknown"])[0]
-    print(f"text={text}, teaem={team}, user={username}")
+    print(f"text={text}, team={team}, user={username}")
+    nolog = False
 
     if userid in ["UJM8TNCUQ"]:
-        print("banned")
-        return
+        nolog = True
 
     # token validation
     if False:
@@ -91,7 +91,7 @@ def slack_slash(event):
                 "title_link": definition["permalink"],
                 "text": definition["definition"],
             },
-            {"mrkdwn": False, "title": "Example", "text": definition["example"],},
+            {"mrkdwn": False, "title": "Example", "text": definition["example"]},
         ],
     }
 
@@ -100,9 +100,12 @@ def slack_slash(event):
         {"title": "User", "value": username, "short": True},
         {"title": "Domain", "value": team, "short": True},
     ]
-    requests.post(
-        SLACK_LOG_WH, headers={"Content-Type": "application/json"}, data=json.dumps(log)
-    )
+    if not nolog:
+        requests.post(
+            SLACK_LOG_WH,
+            headers={"Content-Type": "application/json"},
+            data=json.dumps(log),
+        )
 
     return respond(res={"response_type": "in_channel", **msg,})
 
