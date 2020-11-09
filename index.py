@@ -116,7 +116,7 @@ def oauth_begin(event):
         "body": "Redirecting...",
         "headers": {
             "Content-type": "text/plain",
-            "Location": "https://slack.com/oauth/authorize?"
+            "Location": "https://slack.com/oauth/v2/authorize?"
             + urlencode(
                 {
                     "client_id": SLACK_OAUTH_CLIENT_ID,
